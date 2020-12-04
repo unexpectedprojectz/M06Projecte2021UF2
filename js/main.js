@@ -1,4 +1,6 @@
+
 window.onload = function() {
+
 
     let repetir = true;
     let numero;
@@ -17,5 +19,5 @@ window.onload = function() {
         //{ return(this.nom + "-" + this.ocupacio + "-" + this.edat);
         //}
     };
-       
+ 
 }
