@@ -1,7 +1,7 @@
 
 window.onload = function () {
 
-    let numero, caselles, estrelles, zombis, doblarpuntacio, eliminarzombis, vidaextra;
+    let numero, caselles, estrelles, zombis, doblarpuntuacio, eliminarzombis, vidaextra;
 
     caselles = numero * numero;
     estrelles = numero;
@@ -9,6 +9,8 @@ window.onload = function () {
     doblarpuntuacio = 1, eliminarzombis = 2, vidaextra = 3; // PARA ESTOS TRES HABRÁ QUE CREAR ATRIBUTO BOOLEAN POSICIO PARA SABER SI ES VERTICAL 0 O HORIZONTAL 1 CUANDO SE COLOQUE EN TABLERO
 
     inici();
+
+
 
 }
 
@@ -35,15 +37,27 @@ function comprovaFilesColumnes() {
     if (valor >= 5 && valor <= 20) {
 
         var Tauler = {
-            elements: [],
+            posicions: {},
             inicialitzador: function (filesColumnes) {
+                //segons files i columnes creem les posicions del tauler
+                for (var files = 1; files <= filesColumnes; files++) {
+                    for (var columnes = 1; columnes <= filesColumnes; columnes++) {
+                        this.posicions[files + '-' + columnes] = 'g'; //1-1,1-2,1-3... = g
+                    }
+
+                }
             },
             veureContingut: function () {
+                for (var posicio in Tauler.posicions) {
+                    console.log(posicio, ":", Tauler.posicions[posicio]);
+                }
             }
         };
 
         //Li pasem al tauler el nombre de files/columnes
         Tauler.inicialitzador(valor);
+        //Veure les posicions i el contingut
+        Tauler.veureContingut();
 
         //valor introduït incorrecte
     } else {
