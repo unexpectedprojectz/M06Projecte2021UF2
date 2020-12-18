@@ -42,14 +42,14 @@ function comprovaFilesColumnes() {
                 //segons files i columnes creem les posicions del tauler
                 for (var files = 1; files <= filesColumnes; files++) {
                     for (var columnes = 1; columnes <= filesColumnes; columnes++) {
-                        this.posicions[files + '-' + columnes] = 'g'; //1-1,1-2,1-3... = g
+                        this.posicions[files][columnes] = 'g'; // inicialitzem totes les posicions amb una g (gespa tapada)
                     }
 
                 }
             },
             veureContingut: function () {
                 for (var posicio in Tauler.posicions) {
-                    console.log(posicio, ":", Tauler.posicions[posicio]);
+                    console.log(posicio, " : ", Tauler.posicions[posicio]);
                 }
             }
         };
