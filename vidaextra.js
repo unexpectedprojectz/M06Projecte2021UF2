@@ -1,9 +1,5 @@
-window.onload = function() {
-
-    var VidaExtra = function () { 
-        Recompensa.apply(this, arguments);
-        //lo que sea
-        //this.nom = 'Gos';
-    }; 
-
-}
+var VidaExtra = function () {
+  Recompensa.apply(this, arguments);
+  //lo que sea
+  //this.nom = 'Gos';
+};
