@@ -4,20 +4,24 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Zombies Party</title>
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
     </head>
 
     <body>
         <script src="js/element.js"></script>
         <script src="js/estrella.js"></script>
+        <script src="js/zombi.js"></script>
         <script src="js/recompensa.js"></script>
         <script src="js/doblepunts.js"></script>
         <script src="js/meitatzombis.js"></script>
         <script src="js/vidaextra.js"></script>
+        <script src="js/main.js"></script>
 
         <div id="filesColumnes">
-            Número de files i columnes: <input type="number" id="filCol" min="5"
-                max="20"><br><br>
-            <button id="juga">JUGA</button>
+            Número de files i columnes: <input type="number" id="filCol" min="5" max="20">
+            <button id="juga">JUGA</button><br>
+            Fila i columna a descobrir: <input type="number" id="filadescobrir"><input type="number" id="columnadescobrir">
+            <button id="descobrir">DESCOBRIR</button><br>
         </div>
 
         <div id="tauler">

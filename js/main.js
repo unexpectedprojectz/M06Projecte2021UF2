@@ -41,10 +41,6 @@ function comprovaFilesColumnes() {
     
         doblarpuntuacio = 1, eliminarzombis = 2, vidaextra = 3; // PARA ESTOS TRES HABRÁ QUE CREAR ATRIBUTO BOOLEAN POSICIO PARA SABER SI ES VERTICAL 0 O HORIZONTAL 1 CUANDO SE COLOQUE EN TABLERO
 
-        
-
-
-
         //creem l'objecte tauler
         var Tauler = {
             
@@ -62,9 +58,10 @@ function comprovaFilesColumnes() {
                     }
                 }
                 //distribuim i col·loquem els elements al tauler
+                //RECOMPENSES
                 
                 //ESTRELLES
-                for (var contestrelles = 0; contestrelles <= estrelles; contestrelles++) {
+                for (var contestrelles = 1; contestrelles <= estrelles; contestrelles++) {
                     seguir = true;
                 
                     do {
@@ -72,6 +69,19 @@ function comprovaFilesColumnes() {
                         posicio2 = Math.floor(Math.random() * (valor-1));
                         if (this.posicions[posicio1][posicio2].contingut == 'g'){ //si la casella es troba lliure
                             this.posicions[posicio1][posicio2] = new Estrella('e');
+                            seguir = false;
+                        }
+                    } while(seguir==true);
+                }
+                //ZOMBIS
+                for (var contzombis = 1; contzombis <= zombis; contzombis++) {
+                    seguir = true;
+                
+                    do {
+                        posicio1 = Math.floor(Math.random() * (valor-1));
+                        posicio2 = Math.floor(Math.random() * (valor-1));
+                        if (this.posicions[posicio1][posicio2].contingut == 'g'){ //si la casella es troba lliure
+                            this.posicions[posicio1][posicio2] = new Zombi('z');
                             seguir = false;
                         }
                     } while(seguir==true);
