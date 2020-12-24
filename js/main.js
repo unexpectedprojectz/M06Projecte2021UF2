@@ -60,6 +60,9 @@ function comprovaFilesColumnes() {
                 //distribuim i col·loquem els elements al tauler
                 //RECOMPENSES
                 
+
+
+                
                 //ESTRELLES
                 for (var contestrelles = 1; contestrelles <= estrelles; contestrelles++) {
                     seguir = true;
