@@ -1,8 +1,6 @@
 
 window.onload = function () {
-
     inici();
-
 }
 
 function inici() {
@@ -16,7 +14,6 @@ function inici() {
 
     divEstadistiques = document.getElementById('estadistiques');
     divEstadistiques.style.display = 'none';
-
     document.getElementById("juga").addEventListener("click", creacioTauler);
 
     //vinculem variable text tauler
@@ -231,22 +228,38 @@ function creacioTauler() {
                             imatge = "img/vidaextra.jpg"
                         }
 
-                        textTauler.innerHTML += "<button id='" + files + "-" + columnes + "' onclick='alert(this.id)'><img src='" + imatge + "'></button>";
+                        /*textTauler.innerHTML += "<button id='" + files + "-" + columnes + "' onclick='this.canviarContingut();'><img src='" + imatge + "'></button>"; */
+
                         /*document.getElementById("0-0").onclick = function() {
                             canviarContingut();
                         }*/
+
+                        textTauler.innerHTML += "<button id='" + files + "-" + columnes + "'><img src='" + imatge + "'></button>";
+
                     }
                     textTauler.innerHTML += "<br>";
                 }
 
                 divTauler.style.display = '';
+
+                /* Afegim events onClick per a les diferents posicions */
+                for (var files = 0; files <= valor - 1; files++) {
+                    for (var columnes = 0; columnes <= valor - 1; columnes++) {
+                        document.getElementById(files + "-" + columnes).addEventListener("click", this.canviarContingut);
+                    }
+                }
+
             },
 
             canviarContingut: function () {
-                console.log("hola");
+                console.log(this.id);
+
             }
 
         };
+
+        /* Afegim Onclick per al button descobrir */
+        document.getElementById("descobrir").addEventListener("click", Tauler.canviarContingut);
 
         //Li pasem al tauler el nombre de files/columnes
         Tauler.inicialitzador(valor);
