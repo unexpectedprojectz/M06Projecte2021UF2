@@ -231,7 +231,7 @@ function creacioTauler() {
                             imatge = "img/vidaextra.jpg"
                         }
 
-                        textTauler.innerHTML += "<button id='" + files + "-" + columnes + "' onclick='(function(){Tauler.canviarContingut()})'><img src='" + imatge + "'></button>";
+                        textTauler.innerHTML += "<button id='" + files + "-" + columnes + "' onclick='alert(this.id)'><img src='" + imatge + "'></button>";
                         /*document.getElementById("0-0").onclick = function() {
                             canviarContingut();
                         }*/
