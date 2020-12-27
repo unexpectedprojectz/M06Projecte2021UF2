@@ -16,8 +16,12 @@ function inici() {
     divEstadistiques.style.display = 'none';
     document.getElementById("juga").addEventListener("click", creacioTauler);
 
-    //vinculem variable text tauler
-    textTauler = document.getElementById('texttauler');
+    //vinculem variables necessaries amb html
+    casellesTauler = document.getElementById('casellestauler');
+    totals = document.getElementById('totals');
+    descoberts = document.getElementById('descoberts');
+    filaDescobrir = document.getElementById('filadescobrir');
+    columnaDescobrir = document.getElementById('columnadescobrir');
 }
 
 function creacioTauler() {
@@ -29,6 +33,7 @@ function creacioTauler() {
 
         //inicialitzem els elements i preparem els que necessitarem de cada tipus
         let totalcaselles, estrelles, zombis, doblarpuntuacions, meitatzombis, videsextres;
+        let estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0;
         let rcolumna, rfila, seguir;
         let imatge;
 
@@ -204,45 +209,23 @@ function creacioTauler() {
                         }
                     } while (seguir == true);
                 }
+
+                //mostrem el nombre d'elements totals de cada tipus
+                totals.innerHTML += "Zombis: " + zombis + " Estrelles: " + estrelles + " Doble puntuació: " + doblarpuntuacions + " Meitat zombis: " + meitatzombis + " Vides extres: "+ videsextres
             },
 
-            veureContingut: function () {
+            mostrarContingut: function () {
                 for (var files = 0; files <= valor - 1; files++) {
                     for (var columnes = 0; columnes <= valor - 1; columnes++) {
-                        if (this.casellesusuari[files][columnes].contingut == 'g') {
-                            imatge = "img/gespa.jpg"
-                        }
-                        if (this.casellesusuari[files][columnes].contingut == 'z') {
-                            imatge = "img/zombi.jpg"
-                        }
-                        if (this.casellesusuari[files][columnes].contingut == 'e') {
-                            imatge = "img/estrella.jpg"
-                        }
-                        if (this.casellesusuari[files][columnes].contingut == 'd') {
-                            imatge = "img/doblepuntuacio.jpg"
-                        }
-                        if (this.casellesusuari[files][columnes].contingut == 'm') {
-                            imatge = "img/meitatzombis.jpg"
-                        }
-                        if (this.casellesusuari[files][columnes].contingut == 'v') {
-                            imatge = "img/vidaextra.jpg"
-                        }
-
-                        /*textTauler.innerHTML += "<button id='" + files + "-" + columnes + "' onclick='this.canviarContingut();'><img src='" + imatge + "'></button>"; */
-
-                        /*document.getElementById("0-0").onclick = function() {
-                            canviarContingut();
-                        }*/
-
-                        textTauler.innerHTML += "<button id='" + files + "-" + columnes + "'><img src='" + imatge + "'></button>";
-
+                        imatge = Tauler.rutaImatge(files,columnes);
+                        casellesTauler.innerHTML += "<button id='" + files + "-" + columnes + "'><img src='" + imatge + "'></button>";
                     }
-                    textTauler.innerHTML += "<br>";
+                    casellesTauler.innerHTML += "<br>";
                 }
 
                 divTauler.style.display = '';
 
-                /* Afegim events onClick per a les diferents posicions */
+                //afegim events onClick per a les diferents posicions o botons
                 for (var files = 0; files <= valor - 1; files++) {
                     for (var columnes = 0; columnes <= valor - 1; columnes++) {
                         document.getElementById(files + "-" + columnes).addEventListener("click", this.canviarContingut);
@@ -252,10 +235,85 @@ function creacioTauler() {
             },
 
             canviarContingut: function () {
-                console.log(this.id);
+                let nfila;
+                let ncolumna;
 
+                //COMPROBAR QUE NO SE SALGA DE POSICIONES ARRAY AL INTRODUCIR COORDENADAS
+
+                if(filaDescobrir.value !="" && columnaDescobrir!=""){
+                    nfila = filaDescobrir.value;
+                    ncolumna = columnaDescobrir.value;
+                }
+
+                else{
+                    let coordenades = (this.id).split("-"); //extreiem les coordenades del boto clicat
+                    nfila = coordenades[0];
+                    ncolumna = coordenades[1];
+                }
+
+                if (Tauler.casellesresposta[nfila][ncolumna].contingut===Tauler.casellesresposta[nfila][ncolumna].contingut.toLowerCase()){ // si la casella no està destapada encara
+                    Tauler.casellesusuari[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut; //col·loquem l'element del tauler resposta al tauler usuari
+                    Tauler.casellesresposta[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut.toUpperCase(); //posem el contingut com a ja destapat al tauler resposta
+                    
+                    switch(Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
+                        case 'z':
+                            zombisd++;
+                        break;
+                        case 'e':
+                            estrellesd++;
+                        break;
+                        case 'd':
+                            doblarpuntuacionsd++;
+                        break;
+                        case 'm':
+                            meitatzombisd++;
+                        break;
+                        case 'v':
+                            videsextresd++;
+                        break;
+                    }
+
+                    descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
+
+                    let botocanviar = document.getElementById(nfila + "-" + ncolumna); //canviem la imatge de dintre del boto
+                    imatge = Tauler.rutaImatge(nfila,ncolumna);
+                    botocanviar.innerHTML = "<img src='" + imatge + "'>"
+                }
+
+                else { //si la casella ja es troba destapada
+                    alert("Aquesta casella ja ha sigut descoberta");
+                }
+
+                filaDescobrir.value = "";
+                columnaDescobrir.value = "";
+                
+            },
+
+            rutaImatge: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
+                let imatge;
+                switch(this.casellesusuari[fila][columna].contingut){
+                    case 'g':
+                        imatge = "img/gespa.jpg";
+                    break;
+                    case 'z':
+                        imatge = "img/zombi.jpg";
+                    break;
+                    case 'e':
+                        imatge = "img/estrella.jpg";
+                    break;
+                    case 'd':
+                        imatge = "img/doblepuntuacio.jpg";
+                    break;
+                    case 'm':
+                        imatge = "img/meitatzombis.jpg";
+                    break;
+                    case 'v':
+                        imatge = "img/vidaextra.jpg";
+                    break;
+                }
+                return imatge;
             }
-
+            
         };
 
         /* Afegim Onclick per al button descobrir */
@@ -264,7 +322,7 @@ function creacioTauler() {
         //Li pasem al tauler el nombre de files/columnes
         Tauler.inicialitzador(valor);
         //Veure les posicions i el contingut
-        Tauler.veureContingut();
+        Tauler.mostrarContingut();
 
     }
 
