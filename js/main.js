@@ -237,12 +237,17 @@ function creacioTauler() {
             canviarContingut: function () {
                 let nfila;
                 let ncolumna;
+                let canviarimatge = true;
 
-                //COMPROBAR QUE NO SE SALGA DE POSICIONES ARRAY AL INTRODUCIR COORDENADAS
-
-                if(filaDescobrir.value !="" && columnaDescobrir!=""){
-                    nfila = filaDescobrir.value;
-                    ncolumna = columnaDescobrir.value;
+                if(filaDescobrir.value !="" && columnaDescobrir.value !=""){
+                    if(filaDescobrir.value<=valor-1 && columnaDescobrir.value<=valor-1){
+                        nfila = filaDescobrir.value;
+                        ncolumna = columnaDescobrir.value;
+                    }
+                    else{
+                        canviarimatge = false;
+                        alert("Coordenades fora de rang");
+                    }
                 }
 
                 else{
@@ -251,42 +256,42 @@ function creacioTauler() {
                     ncolumna = coordenades[1];
                 }
 
-                if (Tauler.casellesresposta[nfila][ncolumna].contingut===Tauler.casellesresposta[nfila][ncolumna].contingut.toLowerCase()){ // si la casella no està destapada encara
-                    Tauler.casellesusuari[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut; //col·loquem l'element del tauler resposta al tauler usuari
-                    Tauler.casellesresposta[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut.toUpperCase(); //posem el contingut com a ja destapat al tauler resposta
-                    
-                    switch(Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
-                        case 'z':
-                            zombisd++;
-                        break;
-                        case 'e':
-                            estrellesd++;
-                        break;
-                        case 'd':
-                            doblarpuntuacionsd++;
-                        break;
-                        case 'm':
-                            meitatzombisd++;
-                        break;
-                        case 'v':
-                            videsextresd++;
-                        break;
+                if(canviarimatge == true) {
+                    if (Tauler.casellesresposta[nfila][ncolumna].contingut == Tauler.casellesresposta[nfila][ncolumna].contingut.toLowerCase()){ // si la casella no està destapada encara
+                        Tauler.casellesusuari[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut; //col·loquem l'element del tauler resposta al tauler usuari
+                        Tauler.casellesresposta[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut.toUpperCase(); //posem el contingut com a ja destapat al tauler resposta
+                        
+                        switch(Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
+                            case 'z':
+                                zombisd++;
+                            break;
+                            case 'e':
+                                estrellesd++;
+                            break;
+                            case 'd':
+                                doblarpuntuacionsd++;
+                            break;
+                            case 'm':
+                                meitatzombisd++;
+                            break;
+                            case 'v':
+                                videsextresd++;
+                            break;
+                        }
+    
+                        descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
+    
+                        let botocanviar = document.getElementById(nfila + "-" + ncolumna); //canviem la imatge de dintre del boto
+                        imatge = Tauler.rutaImatge(nfila,ncolumna);
+                        botocanviar.innerHTML = "<img src='" + imatge + "'>"
                     }
-
-                    descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
-
-                    let botocanviar = document.getElementById(nfila + "-" + ncolumna); //canviem la imatge de dintre del boto
-                    imatge = Tauler.rutaImatge(nfila,ncolumna);
-                    botocanviar.innerHTML = "<img src='" + imatge + "'>"
+    
+                    else { //si la casella ja es troba destapada
+                        alert("Aquesta casella ja ha sigut descoberta");
+                    }
                 }
-
-                else { //si la casella ja es troba destapada
-                    alert("Aquesta casella ja ha sigut descoberta");
-                }
-
                 filaDescobrir.value = "";
                 columnaDescobrir.value = "";
-                
             },
 
             rutaImatge: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
