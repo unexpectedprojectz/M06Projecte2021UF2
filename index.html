@@ -5,28 +5,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Zombies Party</title>
         <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
     </head>
 
     <body>
 
         <div id="filesColumnes">
-            Número de files i columnes: <input type="number" id="filCol" min="5" max="20">
-            <button id="juga">JUGA</button><br>
+            Número de files i columnes: <input id="filescolumnes" class="inputs1" input type="number" min="5" max="20">
+            <button id="juga" class="botons">JUGA</button><br>
             
         </div>
 
         <div id="tauler">
-            Fila i columna a descobrir: <input type="number" id="filadescobrir"><input type="number" id="columnadescobrir"><button id="descobrir">DESCOBRIR</button><br>
-            <button id="abandonar">ABANDONAR</button><br>
-            <p>Totals</p>
-            <p id="totals"></p>
-            <p>Descoberts</p>
-            <p id="descoberts">Zombis: 0 Estrelles: 0 Doble puntuació: 0 Meitat zombis: 0 Vides extres: 0</p>
-            <div id="casellestauler"></div>
+            <div id="bloc1">
+                Totals<p id="totals"></p>
+                Descoberts<p id="descoberts"></p>
+            </div>
+            <div id="bloc2">
+                <input id="filadescobrir" class="inputs2" type="number" placeholder="Fila"><span> </span><input id="columnadescobrir" class="inputs2" type="number" placeholder="Columna"><span> </span><button id="descobrir" class="botons">DESCOBRIR</button><br>
+
+                <p>Vides:<p id="vides"></p>
+                <p>Punts: </p><p id="punts"></p>
+                <p id="infodescobert"></p>
+                <div id="casellestauler"></div><br>
+                <button id="abandonar" class="botons">ABANDONAR</button><br>
+            </div>
+            <div id="bloc3">
+                
+            </div>
         </div>
 
         <div id="estadistiques">
-            <p>DIV 3</p>
+           <p>estadistiques</p> 
         </div>
 
         <script src="js/element.js"></script>

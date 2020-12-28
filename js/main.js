@@ -1,9 +1,9 @@
 
 window.onload = function () {
-    inici();
+    inicialitzacio();
 }
 
-function inici() {
+function inicialitzacio() {
     //mostrem input i button
     divFilesColumnes = document.getElementById('filesColumnes');
     divFilesColumnes.style.display = '';
@@ -14,7 +14,7 @@ function inici() {
 
     divEstadistiques = document.getElementById('estadistiques');
     divEstadistiques.style.display = 'none';
-    document.getElementById("juga").addEventListener("click", creacioTauler);
+    document.getElementById("juga").addEventListener("click", iniciarPartida);
 
     //vinculem variables necessaries amb html
     casellesTauler = document.getElementById('casellestauler');
@@ -22,27 +22,42 @@ function inici() {
     descoberts = document.getElementById('descoberts');
     filaDescobrir = document.getElementById('filadescobrir');
     columnaDescobrir = document.getElementById('columnadescobrir');
+    videsPartida = document.getElementById('vides');
+    puntsPartida = document.getElementById('punts');
+    infoDescobert = document.getElementById('infodescobert');
 }
 
-function creacioTauler() {
+function iniciarPartida() {
 
-    var valor = document.getElementById("filCol").value;
+    var valor = document.getElementById("filescolumnes").value;
 
     //si el valor és correcte (entre 5 i 20) podem crear el tauler
     if (valor >= 5 && valor <= 20) {
 
+        divFilesColumnes.style.display = 'none'; //ocultem l'input
+        divEstadistiques.style.display = ''; //mostrem les estadistiques
+
         //inicialitzem els elements i preparem els que necessitarem de cada tipus
         let totalcaselles, estrelles, zombis, doblarpuntuacions, meitatzombis, videsextres;
         let estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0;
+        
+        totalcaselles = valor * valor;
+        zombis = Math.round((totalcaselles * 25) / 100);
+        estrelles = valor;
+        doblarpuntuacions = 1, meitatzombis = 2, videsextres = 3;
+
         let rcolumna, rfila, seguir;
         let imatge;
 
-        estrelles = valor;
+        let vides = 3, punts = 0, increment = 1;
+        let descobriment;
 
-        totalcaselles = valor * valor;
-        zombis = Math.round((totalcaselles * 25) / 100);
+        //inicialitzem les vides i punts de la partida
+        videsPartida.innerHTML = vides;
+        puntsPartida.innerHTML = punts;
 
-        doblarpuntuacions = 1, meitatzombis = 2, videsextres = 3;
+        descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
+        infoDescobert.innerHTML = "Escriu les coordenades a descobrir o bé clica a una casella";
 
         //creem l'objecte tauler
         var Tauler = {
@@ -87,8 +102,8 @@ function creacioTauler() {
 
                         do {
                             rfila = Math.floor(Math.random() * (valor));
-                            if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                                this.casellesresposta[rcolumna][rfila] = new VidaExtra('v');
+                            if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                                this.casellesresposta[rfila][rcolumna] = new VidaExtra('v');
                                 seguir = false;
                             }
                         } while (seguir == true);
@@ -101,8 +116,8 @@ function creacioTauler() {
 
                         do {
                             rcolumna = Math.floor(Math.random() * (valor));
-                            if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                                this.casellesresposta[rcolumna][rfila] = new VidaExtra('v');
+                            if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                                this.casellesresposta[rfila][rcolumna] = new VidaExtra('v');
                                 seguir = false;
                             }
                         } while (seguir == true);
@@ -118,8 +133,8 @@ function creacioTauler() {
 
                         do {
                             rfila = Math.floor(Math.random() * (valor));
-                            if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                                this.casellesresposta[rcolumna][rfila] = new MeitatZombis('m');
+                            if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                                this.casellesresposta[rfila][rcolumna] = new MeitatZombis('m');
                                 seguir = false;
                             }
                         } while (seguir == true);
@@ -132,8 +147,8 @@ function creacioTauler() {
 
                         do {
                             rcolumna = Math.floor(Math.random() * (valor));
-                            if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                                this.casellesresposta[rcolumna][rfila] = new MeitatZombis('m');
+                            if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                                this.casellesresposta[rfila][rcolumna] = new MeitatZombis('m');
                                 seguir = false;
                             }
                         } while (seguir == true);
@@ -144,10 +159,10 @@ function creacioTauler() {
                 seguir = true;
 
                 do {
-                    rcolumna = Math.floor(Math.random() * (valor));
                     rfila = Math.floor(Math.random() * (valor));
-                    if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                        this.casellesresposta[rcolumna][rfila] = new DoblePunts('d');
+                    rcolumna = Math.floor(Math.random() * (valor));
+                    if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                        this.casellesresposta[rfila][rcolumna] = new DoblePunts('d');
                         seguir = false;
                     }
                 } while (seguir == true);
@@ -162,18 +177,18 @@ function creacioTauler() {
                     do {
                         rcolumna = Math.floor(Math.random() * (valor));
                         rfila = Math.floor(Math.random() * (valor));
-                        if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
+                        if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
                             switch (tipusrecompensa) {
                                 case 0: //vida extra
-                                    this.casellesresposta[rcolumna][rfila] = new VidaExtra('v');
+                                    this.casellesresposta[rfila][rcolumna] = new VidaExtra('v');
                                     videsextres++;
                                     break;
                                 case 1: //meitat zombis
-                                    this.casellesresposta[rcolumna][rfila] = new MeitatZombis('m');
+                                    this.casellesresposta[rfila][rcolumna] = new MeitatZombis('m');
                                     meitatzombis++;
                                     break;
                                 case 2: //doble puntuacio
-                                    this.casellesresposta[rcolumna][rfila] = new DoblePunts('d');
+                                    this.casellesresposta[rfila][rcolumna] = new DoblePunts('d');
                                     doblarpuntuacions++;
                                     break;
                             }
@@ -189,8 +204,8 @@ function creacioTauler() {
                     do {
                         rcolumna = Math.floor(Math.random() * (valor));
                         rfila = Math.floor(Math.random() * (valor));
-                        if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                            this.casellesresposta[rcolumna][rfila] = new Estrella('e');
+                        if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                            this.casellesresposta[rfila][rcolumna] = new Estrella('e');
                             seguir = false;
                         }
                     } while (seguir == true);
@@ -203,15 +218,16 @@ function creacioTauler() {
                     do {
                         rcolumna = Math.floor(Math.random() * (valor));
                         rfila = Math.floor(Math.random() * (valor));
-                        if (this.casellesresposta[rcolumna][rfila].contingut == 'g') { //si la casella es troba lliure
-                            this.casellesresposta[rcolumna][rfila] = new Zombi('z');
+                        if (this.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
+                            this.casellesresposta[rfila][rcolumna] = new Zombi('z');
+                            console.log(rfila + "-" + rcolumna);
                             seguir = false;
                         }
                     } while (seguir == true);
                 }
 
                 //mostrem el nombre d'elements totals de cada tipus
-                totals.innerHTML += "Zombis: " + zombis + " Estrelles: " + estrelles + " Doble puntuació: " + doblarpuntuacions + " Meitat zombis: " + meitatzombis + " Vides extres: "+ videsextres
+                totals.innerHTML = "Zombis: " + zombis + " Estrelles: " + estrelles + " Doble puntuació: " + doblarpuntuacions + " Meitat zombis: " + meitatzombis + " Vides extres: "+ videsextres
             },
 
             mostrarContingut: function () {
@@ -246,7 +262,7 @@ function creacioTauler() {
                     }
                     else{
                         canviarimatge = false;
-                        alert("Coordenades fora de rang");
+                        alert("Coordenades invàlides o fora de rang");
                     }
                 }
 
@@ -257,41 +273,93 @@ function creacioTauler() {
                 }
 
                 if(canviarimatge == true) {
-                    if (Tauler.casellesresposta[nfila][ncolumna].contingut == Tauler.casellesresposta[nfila][ncolumna].contingut.toLowerCase()){ // si la casella no està destapada encara
+                    if (Tauler.casellesresposta[nfila][ncolumna].contingut === (Tauler.casellesresposta[nfila][ncolumna].contingut).toLowerCase()){ // si la casella no està destapada encara
                         Tauler.casellesusuari[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut; //col·loquem l'element del tauler resposta al tauler usuari
                         Tauler.casellesresposta[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut.toUpperCase(); //posem el contingut com a ja destapat al tauler resposta
                         
                         switch(Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
+                            case 'g':
+                                descobriment = "gespa";
+                                punts = punts + (50 * increment);
+                            break;
                             case 'z':
+                                descobriment = "un zombi";
                                 zombisd++;
+                                vides--;
+                                if((punts-100)>=0){
+                                    punts = punts - 100;
+                                }
                             break;
                             case 'e':
+                                descobriment = "una estrella";
                                 estrellesd++;
+                                punts = punts + (200 * increment);
                             break;
                             case 'd':
+                                descobriment = "una doble puntuacio";
                                 doblarpuntuacionsd++;
+                                if(doblarpuntuacionsd == doblarpuntuacionsd){
+                                    increment = 2;
+                                }
                             break;
                             case 'm':
+                                descobriment = "un meitat de zombis";
                                 meitatzombisd++;
+                                if(meitatzombisd == meitatzombis) { //en cas de destapar tots els meitat zombis
+                                    let zombiseliminar = Math.round((zombis-zombisd)/2); //calculem quina es la meitat dels zombis encara tapats
+                                    let zombiseliminats = 0;
+                                    for (var rfila = 0; rfila <= valor - 1 && zombiseliminats < zombiseliminar; rfila++) {
+                                        for (var rcolumna = 0; rcolumna <= valor - 1 && zombiseliminats < zombiseliminar; rcolumna++) {
+                                            if (Tauler.casellesresposta[rfila][rcolumna].contingut == 'z') { //intercanviem els zombis restants per gespa
+                                                Tauler.casellesresposta[rfila][rcolumna].contingut = 'g';
+                                                Tauler.casellesusuari[rfila][rcolumna].contingut = Tauler.casellesresposta[rfila][rcolumna].contingut;
+                                                zombis--;
+                                                zombiseliminats++;
+                                            }
+                                        }
+                                    }
+                                    totals.innerHTML = "Zombis: " + zombis + " Estrelles: " + estrelles + " Doble puntuació: " + doblarpuntuacions + " Meitat zombis: " + meitatzombis + " Vides extres: "+ videsextres
+                                }
                             break;
                             case 'v':
+                                descobriment = "una vida extra";
                                 videsextresd++;
+                                if(videsextresd == videsextres) { //en cas de destapar totes les vides extres
+                                    vides++;
+                                }
                             break;
                         }
+
+                        infoDescobert.innerHTML = "Has descobert " + descobriment + "!";
     
                         descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
     
                         let botocanviar = document.getElementById(nfila + "-" + ncolumna); //canviem la imatge de dintre del boto
                         imatge = Tauler.rutaImatge(nfila,ncolumna);
                         botocanviar.innerHTML = "<img src='" + imatge + "'>"
+                        
+                        videsPartida.innerHTML = vides; //actualitzem les vides i punts de la partida
+                        puntsPartida.innerHTML = punts;
+
                     }
     
                     else { //si la casella ja es troba destapada
                         alert("Aquesta casella ja ha sigut descoberta");
                     }
                 }
+
                 filaDescobrir.value = "";
                 columnaDescobrir.value = "";
+
+                if (vides == 0){ //si el jugador es queda sense vides
+                    Tauler.abandonar();
+                    alert("Has perdut!");
+                }
+
+                if (estrellesd == estrelles){
+                    alert("Has guanyat!");
+                }
+
             },
 
             rutaImatge: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
@@ -317,16 +385,24 @@ function creacioTauler() {
                     break;
                 }
                 return imatge;
+            },
+
+            abandonar: function (){
+                casellesTauler.innerHTML = "";
+                divFilesColumnes.style.display = '';
+                divTauler.style.display = 'none';
+                divEstadistiques.style.display = 'none';
             }
             
         };
 
-        /* Afegim Onclick per al button descobrir */
+        //afegim onclick per al button descobrir i abandonar
         document.getElementById("descobrir").addEventListener("click", Tauler.canviarContingut);
+        document.getElementById("abandonar").addEventListener("click", Tauler.abandonar);
 
-        //Li pasem al tauler el nombre de files/columnes
+        //li pasem al tauler el nombre de files/columnes
         Tauler.inicialitzador(valor);
-        //Veure les posicions i el contingut
+        //veure les posicions i el contingut
         Tauler.mostrarContingut();
 
     }
