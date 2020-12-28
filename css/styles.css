@@ -1,6 +1,6 @@
 * {
     font-family: 'Montserrat', sans-serif;
-    color: white;
+    color: #eeeeee;
 }
 
 body {
@@ -43,4 +43,31 @@ body {
 
 #abandonar {
     background-color: #c62828;
+}
+
+#tauler {
+    display: flex;
+    margin-top: 20px;
+}
+
+#bloc1 {
+    text-align: center;
+    margin: auto;
+}
+
+#bloc3 {
+    text-align: center;
+    margin: auto;
+}
+
+.btcaselles{
+    background-color: #283593;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+img {
+    border-radius: 7px;
 }

@@ -12,7 +12,7 @@ function inicialitzacio() {
     divTauler = document.getElementById('tauler');
     divTauler.style.display = 'none';
 
-    divEstadistiques = document.getElementById('estadistiques');
+    divEstadistiques = document.getElementById('bloc3');
     divEstadistiques.style.display = 'none';
     document.getElementById("juga").addEventListener("click", iniciarPartida);
 
@@ -56,7 +56,7 @@ function iniciarPartida() {
         videsPartida.innerHTML = vides;
         puntsPartida.innerHTML = punts;
 
-        descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
+        descoberts.innerHTML = "Zombis: " + zombisd + "<br> Estrelles: " + estrellesd + "<br> Doble puntuació: " + doblarpuntuacionsd + "<br> Meitat zombis: " + meitatzombisd + "<br> Vides extres: " + videsextresd;
         infoDescobert.innerHTML = "Escriu les coordenades a descobrir o bé clica a una casella";
 
         //creem l'objecte tauler
@@ -227,14 +227,14 @@ function iniciarPartida() {
                 }
 
                 //mostrem el nombre d'elements totals de cada tipus
-                totals.innerHTML = "Zombis: " + zombis + " Estrelles: " + estrelles + " Doble puntuació: " + doblarpuntuacions + " Meitat zombis: " + meitatzombis + " Vides extres: "+ videsextres
+                totals.innerHTML = "Zombis: " + zombis + "<br> Estrelles: " + estrelles + "<br> Doble puntuació: " + doblarpuntuacions + "<br> Meitat zombis: " + meitatzombis + "<br> Vides extres: "+ videsextres
             },
 
             mostrarContingut: function () {
                 for (var files = 0; files <= valor - 1; files++) {
                     for (var columnes = 0; columnes <= valor - 1; columnes++) {
                         imatge = Tauler.rutaImatge(files,columnes);
-                        casellesTauler.innerHTML += "<button id='" + files + "-" + columnes + "'><img src='" + imatge + "'></button>";
+                        casellesTauler.innerHTML += "<button id='" + files + "-" + columnes + "' class='btcaselles'><img src='" + imatge + "'></button>";
                     }
                     casellesTauler.innerHTML += "<br>";
                 }
@@ -318,7 +318,7 @@ function iniciarPartida() {
                                             }
                                         }
                                     }
-                                    totals.innerHTML = "Zombis: " + zombis + " Estrelles: " + estrelles + " Doble puntuació: " + doblarpuntuacions + " Meitat zombis: " + meitatzombis + " Vides extres: "+ videsextres
+                                    totals.innerHTML = "Zombis: " + zombis + "<br> Estrelles: " + estrelles + "<br> Doble puntuació: " + doblarpuntuacions + "<br> Meitat zombis: " + meitatzombis + "<br> Vides extres: "+ videsextres
                                 }
                             break;
                             case 'v':
@@ -332,7 +332,7 @@ function iniciarPartida() {
 
                         infoDescobert.innerHTML = "Has descobert " + descobriment + "!";
     
-                        descoberts.innerHTML = "Zombis: " + zombisd + " Estrelles: " + estrellesd + " Doble puntuació: " + doblarpuntuacionsd + " Meitat zombis: " + meitatzombisd + " Vides extres: " + videsextresd;
+                        descoberts.innerHTML = "Zombis: " + zombisd + "<br> Estrelles: " + estrellesd + "<br> Doble puntuació: " + doblarpuntuacionsd + "<br> Meitat zombis: " + meitatzombisd + "<br> Vides extres: " + videsextresd;
     
                         let botocanviar = document.getElementById(nfila + "-" + ncolumna); //canviem la imatge de dintre del boto
                         imatge = Tauler.rutaImatge(nfila,ncolumna);
