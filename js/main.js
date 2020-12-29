@@ -71,6 +71,55 @@ function iniciarPartida() {
                     abandonades = localStorage.getItem("abandonades");
                 }
                 estadistiques.innerHTML = "Guanyades: " + guanyades + "<br> Perdudes: " + perdudes + "<br> Abandonades: " + abandonades;
+    casellesTauler = document.getElementById('casellestauler');
+    totals = document.getElementById('totals');
+    descoberts = document.getElementById('descoberts');
+    filaDescobrir = document.getElementById('filadescobrir');
+    columnaDescobrir = document.getElementById('columnadescobrir');
+    videsPartida = document.getElementById('vides');
+    puntsPartida = document.getElementById('punts');
+    infoDescobert = document.getElementById('infodescobert');
+}
+
+function iniciarPartida() {
+
+    var valor = document.getElementById("filescolumnes").value;
+
+    //si el valor és correcte (entre 5 i 20) podem crear el tauler
+    if (valor >= 5 && valor <= 20) {
+
+        divFilesColumnes.style.display = 'none'; //ocultem l'input
+        divEstadistiques.style.display = ''; //mostrem les estadistiques
+
+        //inicialitzem els elements i preparem els que necessitarem de cada tipus
+        let totalcaselles, estrelles, zombis, doblarpuntuacions, meitatzombis, videsextres;
+        let estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0, ganadas = 0, perdidas = 0
+        abandonadas = 0, contenido = '';
+
+        perdidas = localStorage.getItem("perdudes");
+        ganadas = localStorage.getItem("guanyades");
+        abandonadas = localStorage.getItem("abandonadas");
+
+        if (perdidas == null) {
+            perdidas = 0;
+        } if (ganadas == null) {
+            ganadas = 0;
+        } if (abandonadas == null) {
+            abandonadas = 0
+        }
+        
+        divEstadistiques.innerHTML = "Estadistiques: <br> Guanyades: " + ganadas + "<br> Perdudes: " + perdidas + "<br> Abandonades: " + abandonadas;
+
+        totalcaselles = valor * valor;
+        zombis = Math.round((totalcaselles * 25) / 100);
+        estrelles = valor;
+        doblarpuntuacions = 1, meitatzombis = 2, videsextres = 3;
+
+        let rcolumna, rfila, seguir;
+        let imatge;
+
+        let vides = 3, punts = 0, increment = 1;
+        let descobriment;
 
                 //puntuacions maximes
                 puntuacionsmax.innerHTML = "";
@@ -473,27 +522,3 @@ function iniciarPartida() {
     document.getElementById("abandonar").addEventListener("click", Tauler.reiniciar);
 
 }
-
-/* ********************** localStorage *********************************** */
-
-/* emmagatzema dades sense data de caducitat.
- Les dades no es suprimiran quan el navegador estigui tancat i estaran disponibles el dia,
- la setmana o l'any següent. */
-
-/* GUARDAR DATO
-
-localStorage.setItem("key", "value");
-
-*/
-
-/* LEER DATO
-
-var lastname = localStorage.getItem("key");
-
-*/
-
-/* ELIMINAR DATO
-
-localStorage.removeItem("key");
-
-*/
