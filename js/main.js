@@ -79,7 +79,6 @@ function iniciarPartida() {
                         localStorage.setItem("puntuacio" + numfc, 0);
                     }
                 }
-
                 for(var numfc = 5; numfc <= 20; numfc++){
                     puntuacionsmax.innerHTML += numfc + "x" + numfc + " : " + localStorage.getItem("puntuacio" + numfc) + "<br>";
                 }
