@@ -83,7 +83,6 @@ function iniciarPartida() {
                 for(var numfc = 5; numfc <= 20; numfc++){
                     puntuacionsmax.innerHTML += numfc + "x" + numfc + " : " + localStorage.getItem("puntuacio" + numfc) + "<br>";
                 }
-                console.log("segundo for hecho");
                 
                 //inicialitzem els elements i preparem els que necessitarem de cada tipus
                 estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0;
@@ -455,7 +454,6 @@ function iniciarPartida() {
 
             //actualitzem puntuació màxima
             if (punts>localStorage.getItem("puntuacio" + valor)) {
-                console.log("entra al if de reiniciar");
                 localStorage.setItem("puntuacio" + valor, punts)
             }
         }
