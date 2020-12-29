@@ -40,7 +40,7 @@ function iniciarPartida() {
         //inicialitzem els elements i preparem els que necessitarem de cada tipus
         let totalcaselles, estrelles, zombis, doblarpuntuacions, meitatzombis, videsextres;
         let estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0;
-        
+
         totalcaselles = valor * valor;
         zombis = Math.round((totalcaselles * 25) / 100);
         estrelles = valor;
@@ -227,13 +227,13 @@ function iniciarPartida() {
                 }
 
                 //mostrem el nombre d'elements totals de cada tipus
-                totals.innerHTML = "Zombis: " + zombis + "<br> Estrelles: " + estrelles + "<br> Doble puntuació: " + doblarpuntuacions + "<br> Meitat zombis: " + meitatzombis + "<br> Vides extres: "+ videsextres
+                totals.innerHTML = "Zombis: " + zombis + "<br> Estrelles: " + estrelles + "<br> Doble puntuació: " + doblarpuntuacions + "<br> Meitat zombis: " + meitatzombis + "<br> Vides extres: " + videsextres
             },
 
             mostrarContingut: function () {
                 for (var files = 0; files <= valor - 1; files++) {
                     for (var columnes = 0; columnes <= valor - 1; columnes++) {
-                        imatge = Tauler.rutaImatge(files,columnes);
+                        imatge = Tauler.rutaImatge(files, columnes);
                         casellesTauler.innerHTML += "<button id='" + files + "-" + columnes + "' class='btcaselles'><img src='" + imatge + "'></button>";
                     }
                     casellesTauler.innerHTML += "<br>";
@@ -255,58 +255,58 @@ function iniciarPartida() {
                 let ncolumna;
                 let canviarimatge = true;
 
-                if(filaDescobrir.value !="" && columnaDescobrir.value !=""){
-                    if(filaDescobrir.value<=valor-1 && columnaDescobrir.value<=valor-1){
+                if (filaDescobrir.value != "" && columnaDescobrir.value != "") {
+                    if (filaDescobrir.value <= valor - 1 && columnaDescobrir.value <= valor - 1) {
                         nfila = filaDescobrir.value;
                         ncolumna = columnaDescobrir.value;
                     }
-                    else{
+                    else {
                         canviarimatge = false;
                         alert("Coordenades invàlides o fora de rang");
                     }
                 }
 
-                else{
+                else {
                     let coordenades = (this.id).split("-"); //extreiem les coordenades del boto clicat
                     nfila = coordenades[0];
                     ncolumna = coordenades[1];
                 }
 
-                if(canviarimatge == true) {
-                    if (Tauler.casellesresposta[nfila][ncolumna].contingut === (Tauler.casellesresposta[nfila][ncolumna].contingut).toLowerCase()){ // si la casella no està destapada encara
+                if (canviarimatge == true) {
+                    if (Tauler.casellesresposta[nfila][ncolumna].contingut === (Tauler.casellesresposta[nfila][ncolumna].contingut).toLowerCase()) { // si la casella no està destapada encara
                         Tauler.casellesusuari[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut; //col·loquem l'element del tauler resposta al tauler usuari
                         Tauler.casellesresposta[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut.toUpperCase(); //posem el contingut com a ja destapat al tauler resposta
-                        
-                        switch(Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
+
+                        switch (Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
                             case 'g':
                                 descobriment = "gespa";
                                 punts = punts + (50 * increment);
-                            break;
+                                break;
                             case 'z':
                                 descobriment = "un zombi";
                                 zombisd++;
                                 vides--;
-                                if((punts-100)>=0){
+                                if ((punts - 100) >= 0) {
                                     punts = punts - 100;
                                 }
-                            break;
+                                break;
                             case 'e':
                                 descobriment = "una estrella";
                                 estrellesd++;
                                 punts = punts + (200 * increment);
-                            break;
+                                break;
                             case 'd':
                                 descobriment = "una doble puntuacio";
                                 doblarpuntuacionsd++;
-                                if(doblarpuntuacionsd == doblarpuntuacionsd){
+                                if (doblarpuntuacionsd == doblarpuntuacionsd) {
                                     increment = 2;
                                 }
-                            break;
+                                break;
                             case 'm':
                                 descobriment = "un meitat de zombis";
                                 meitatzombisd++;
-                                if(meitatzombisd == meitatzombis) { //en cas de destapar tots els meitat zombis
-                                    let zombiseliminar = Math.round((zombis-zombisd)/2); //calculem quina es la meitat dels zombis encara tapats
+                                if (meitatzombisd == meitatzombis) { //en cas de destapar tots els meitat zombis
+                                    let zombiseliminar = Math.round((zombis - zombisd) / 2); //calculem quina es la meitat dels zombis encara tapats
                                     let zombiseliminats = 0;
                                     for (var rfila = 0; rfila <= valor - 1 && zombiseliminats < zombiseliminar; rfila++) {
                                         for (var rcolumna = 0; rcolumna <= valor - 1 && zombiseliminats < zombiseliminar; rcolumna++) {
@@ -318,31 +318,31 @@ function iniciarPartida() {
                                             }
                                         }
                                     }
-                                    totals.innerHTML = "Zombis: " + zombis + "<br> Estrelles: " + estrelles + "<br> Doble puntuació: " + doblarpuntuacions + "<br> Meitat zombis: " + meitatzombis + "<br> Vides extres: "+ videsextres
+                                    totals.innerHTML = "Zombis: " + zombis + "<br> Estrelles: " + estrelles + "<br> Doble puntuació: " + doblarpuntuacions + "<br> Meitat zombis: " + meitatzombis + "<br> Vides extres: " + videsextres
                                 }
-                            break;
+                                break;
                             case 'v':
                                 descobriment = "una vida extra";
                                 videsextresd++;
-                                if(videsextresd == videsextres) { //en cas de destapar totes les vides extres
+                                if (videsextresd == videsextres) { //en cas de destapar totes les vides extres
                                     vides++;
                                 }
-                            break;
+                                break;
                         }
 
                         infoDescobert.innerHTML = "Has descobert " + descobriment + "!";
-    
+
                         descoberts.innerHTML = "Zombis: " + zombisd + "<br> Estrelles: " + estrellesd + "<br> Doble puntuació: " + doblarpuntuacionsd + "<br> Meitat zombis: " + meitatzombisd + "<br> Vides extres: " + videsextresd;
-    
+
                         let botocanviar = document.getElementById(nfila + "-" + ncolumna); //canviem la imatge de dintre del boto
-                        imatge = Tauler.rutaImatge(nfila,ncolumna);
+                        imatge = Tauler.rutaImatge(nfila, ncolumna);
                         botocanviar.innerHTML = "<img src='" + imatge + "'>"
-                        
+
                         videsPartida.innerHTML = vides; //actualitzem les vides i punts de la partida
                         puntsPartida.innerHTML = punts;
 
                     }
-    
+
                     else { //si la casella ja es troba destapada
                         alert("Aquesta casella ja ha sigut descoberta");
                     }
@@ -351,30 +351,36 @@ function iniciarPartida() {
                 filaDescobrir.value = "";
                 columnaDescobrir.value = "";
 
-                if (vides == 0){ //si el jugador es queda sense vides
+                if (vides == 0) { //si el jugador es queda sense vides
                     Tauler.abandonar();
                     alert("Has perdut!");
 
+                    //obtenim el item 
                     var partidaPerduda = localStorage.getItem("perdudes");
 
-                    if (partidaPerduda == null){
+                    //si no ha estat definit el definim amb valor 1
+                    if (partidaPerduda == null) {
                         localStorage.setItem("perdudes", 1);
-                    }else {
+                    //si ha estat definit l'obtenim i l'augmentem en 1
+                    } else {
                         partidaPerduda = parseInt(localStorage.getItem("perdudes"));
-                        localStorage.setItem("perdudes", partidaPerduda +1);
+                        localStorage.setItem("perdudes", partidaPerduda + 1);
                     }
                 }
 
-                if (estrellesd == estrelles){
+                if (estrellesd == estrelles) {
                     alert("Has guanyat!");
 
+                    //obtenim el item 
                     var partidaGuanyada = localStorage.getItem("guanyades");
 
-                    if (partidaGuanyada == null){
+                    //si no ha estat definit el definim amb valor 1
+                    if (partidaGuanyada == null) {
                         localStorage.setItem("guanyades", 1);
-                    }else {
+                    //si ha estat definit l'obtenim i l'augmentem en 1
+                    } else {
                         partidaGuanyada = parseInt(localStorage.getItem("guanyades"));
-                        localStorage.setItem("guanyades", partidaGuanyada +1);
+                        localStorage.setItem("guanyades", partidaGuanyada + 1);
                     }
                 }
 
@@ -382,38 +388,42 @@ function iniciarPartida() {
 
             rutaImatge: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
                 let imatge;
-                switch(this.casellesusuari[fila][columna].contingut){
+                switch (this.casellesusuari[fila][columna].contingut) {
                     case 'g':
                         imatge = "img/gespa.jpg";
-                    break;
+                        break;
                     case 'z':
                         imatge = "img/zombi.jpg";
-                    break;
+                        break;
                     case 'e':
                         imatge = "img/estrella.jpg";
-                    break;
+                        break;
                     case 'd':
                         imatge = "img/doblepuntuacio.jpg";
-                    break;
+                        break;
                     case 'm':
                         imatge = "img/meitatzombis.jpg";
-                    break;
+                        break;
                     case 'v':
                         imatge = "img/vidaextra.jpg";
-                    break;
+                        break;
                 }
                 return imatge;
             },
 
-            abandonar: function (){
+            abandonar: function () {
 
+                //obtenim el item 
                 var partidaAbandonada = localStorage.getItem("abandonades");
 
-                if (partidaAbandonada == null){
+                //si no ha estat definit el definim amb valor 1
+                if (partidaAbandonada == null) {
                     localStorage.setItem("abandonades", 1);
-                }else {
+                
+                //si ha estat definit l'obtenim i l'augmentem en 1
+                } else {
                     partidaAbandonada = parseInt(localStorage.getItem("abandonades"));
-                    localStorage.setItem("abandonades", partidaAbandonada +1);
+                    localStorage.setItem("abandonades", partidaAbandonada + 1);
                 }
 
                 casellesTauler.innerHTML = "";
@@ -421,7 +431,7 @@ function iniciarPartida() {
                 divTauler.style.display = 'none';
                 divEstadistiques.style.display = 'none';
             }
-            
+
         };
 
         //afegim onclick per al button descobrir i abandonar
@@ -442,27 +452,3 @@ function iniciarPartida() {
 
 
 }
-
-/* ********************** localStorage *********************************** */
-
-/* emmagatzema dades sense data de caducitat.
- Les dades no es suprimiran quan el navegador estigui tancat i estaran disponibles el dia,
- la setmana o l'any següent. */
-
-/* GUARDAR DATO
-
-localStorage.setItem("key", "value");
-
-*/
-
-/* LEER DATO
-
-var lastname = localStorage.getItem("key");
-
-*/
-
-/* ELIMINAR DATO
-
-localStorage.removeItem("key");
-
-*/
