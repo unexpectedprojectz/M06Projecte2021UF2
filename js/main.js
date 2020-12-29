@@ -39,7 +39,22 @@ function iniciarPartida() {
 
         //inicialitzem els elements i preparem els que necessitarem de cada tipus
         let totalcaselles, estrelles, zombis, doblarpuntuacions, meitatzombis, videsextres;
-        let estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0;
+        let estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0, ganadas = 0, perdidas = 0
+        abandonadas = 0, contenido = '';
+
+        perdidas = localStorage.getItem("perdudes");
+        ganadas = localStorage.getItem("guanyades");
+        abandonadas = localStorage.getItem("abandonadas");
+
+        if (perdidas == null) {
+            perdidas = 0;
+        } if (ganadas == null) {
+            ganadas = 0;
+        } if (abandonadas == null) {
+            abandonadas = 0
+        }
+        
+        divEstadistiques.innerHTML = "Estadistiques: <br> Guanyades: " + ganadas + "<br> Perdudes: " + perdidas + "<br> Abandonades: " + abandonadas;
 
         totalcaselles = valor * valor;
         zombis = Math.round((totalcaselles * 25) / 100);
@@ -361,7 +376,7 @@ function iniciarPartida() {
                     //si no ha estat definit el definim amb valor 1
                     if (partidaPerduda == null) {
                         localStorage.setItem("perdudes", 1);
-                    //si ha estat definit l'obtenim i l'augmentem en 1
+                        //si ha estat definit l'obtenim i l'augmentem en 1
                     } else {
                         partidaPerduda = parseInt(localStorage.getItem("perdudes"));
                         localStorage.setItem("perdudes", partidaPerduda + 1);
@@ -377,7 +392,7 @@ function iniciarPartida() {
                     //si no ha estat definit el definim amb valor 1
                     if (partidaGuanyada == null) {
                         localStorage.setItem("guanyades", 1);
-                    //si ha estat definit l'obtenim i l'augmentem en 1
+                        //si ha estat definit l'obtenim i l'augmentem en 1
                     } else {
                         partidaGuanyada = parseInt(localStorage.getItem("guanyades"));
                         localStorage.setItem("guanyades", partidaGuanyada + 1);
@@ -412,31 +427,35 @@ function iniciarPartida() {
             },
 
             abandonar: function () {
-
-                //obtenim el item 
-                var partidaAbandonada = localStorage.getItem("abandonades");
-
-                //si no ha estat definit el definim amb valor 1
-                if (partidaAbandonada == null) {
-                    localStorage.setItem("abandonades", 1);
-                
-                //si ha estat definit l'obtenim i l'augmentem en 1
-                } else {
-                    partidaAbandonada = parseInt(localStorage.getItem("abandonades"));
-                    localStorage.setItem("abandonades", partidaAbandonada + 1);
-                }
-
                 casellesTauler.innerHTML = "";
                 divFilesColumnes.style.display = '';
                 divTauler.style.display = 'none';
                 divEstadistiques.style.display = 'none';
+            },
+
+            abandonarButton: function () {
+
+                Tauler.abandonar();
+
+                //obtenim el item 
+                var partidaAbandonada = localStorage.getItem("abandonadas");
+
+                //si no ha estat definit el definim amb valor 1
+                if (partidaAbandonada == null) {
+                    localStorage.setItem("abandonadas", 1);
+                    //si ha estat definit l'obtenim i l'augmentem en 1
+                } else {
+                    partidaAbandonada = parseInt(localStorage.getItem("abandonadas")) + 1;
+                    localStorage.setItem("abandonadas", partidaAbandonada);
+                }
+
             }
 
         };
 
         //afegim onclick per al button descobrir i abandonar
         document.getElementById("descobrir").addEventListener("click", Tauler.canviarContingut);
-        document.getElementById("abandonar").addEventListener("click", Tauler.abandonar);
+        document.getElementById("abandonar").addEventListener("click", Tauler.abandonarButton);
 
         //li pasem al tauler el nombre de files/columnes
         Tauler.inicialitzador(valor);
