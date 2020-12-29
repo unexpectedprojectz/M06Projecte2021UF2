@@ -354,10 +354,28 @@ function iniciarPartida() {
                 if (vides == 0){ //si el jugador es queda sense vides
                     Tauler.abandonar();
                     alert("Has perdut!");
+
+                    var partidaPerduda = localStorage.getItem("perdudes");
+
+                    if (partidaPerduda == null){
+                        localStorage.setItem("perdudes", 1);
+                    }else {
+                        partidaPerduda = parseInt(localStorage.getItem("perdudes"));
+                        localStorage.setItem("perdudes", partidaPerduda +1);
+                    }
                 }
 
                 if (estrellesd == estrelles){
                     alert("Has guanyat!");
+
+                    var partidaGuanyada = localStorage.getItem("guanyades");
+
+                    if (partidaGuanyada == null){
+                        localStorage.setItem("guanyades", 1);
+                    }else {
+                        partidaGuanyada = parseInt(localStorage.getItem("guanyades"));
+                        localStorage.setItem("guanyades", partidaGuanyada +1);
+                    }
                 }
 
             },
@@ -388,6 +406,16 @@ function iniciarPartida() {
             },
 
             abandonar: function (){
+
+                var partidaAbandonada = localStorage.getItem("abandonades");
+
+                if (partidaAbandonada == null){
+                    localStorage.setItem("abandonades", 1);
+                }else {
+                    partidaAbandonada = parseInt(localStorage.getItem("abandonades"));
+                    localStorage.setItem("abandonades", partidaAbandonada +1);
+                }
+
                 casellesTauler.innerHTML = "";
                 divFilesColumnes.style.display = '';
                 divTauler.style.display = 'none';
