@@ -11,7 +11,7 @@
     <body>
 
         <div id="filesColumnes">
-            Número de files i columnes: <input id="filescolumnes" class="inputs1" input type="number" min="5" max="20">
+            <text>Número de files i columnes: </text><input id="filescolumnes" class="inputs1" input type="number" min="5" max="20" value="5">
             <button id="juga" class="botons">JUGA</button><br>
             
         </div>
@@ -25,17 +25,23 @@
             </div>
             <div id="bloc2">
                 <br>
-                <b>Vides: </b><text id="vides"></text>
-                <b>Punts: </b><text id="punts"></text><br><br>
+                <div id="divvp">
+                    <b>Vides: </b><text id="vides"></text>
+                    <b>Punts: </b><text id="punts"></text>
+                </div>
+                <br>
 
-                <input id="filadescobrir" class="inputs2" type="number" placeholder="Fila"><span> </span><input id="columnadescobrir" class="inputs2" type="number" placeholder="Columna"><span> </span><button id="descobrir" class="botons">DESCOBRIR</button><br>
+                <text id="infodescobert"></text><br><br>
+                <input id="filadescobrir" class="inputs2" type="number" placeholder="Fila"><span> </span><input id="columnadescobrir" class="inputs2" type="number" placeholder="Columna"><span> </span><button id="descobrir" class="botons">DESCOBRIR</button><br><br>
                 
-                <p id="infodescobert"></p>
                 <div id="casellestauler"></div><br><br>
                 <button id="abandonar" class="botons">ABANDONAR</button><br>
             </div>
             <div id="bloc3">
-                <p>estadistiques</p>
+                <b>Estadistiques</b><br>
+                <text id="estadistiques"></text><br><br>
+                <b>Puntuacions màximes</b><br>
+                <text id="puntuacionsmax"></text>
             </div>
         </div>
 

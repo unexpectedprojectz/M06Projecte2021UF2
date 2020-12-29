@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #283593;
+    background-color: #303f9f;
 }
 
 #filesColumnes {
@@ -51,17 +51,21 @@ body {
 }
 
 #bloc1 {
-    text-align: center;
+    text-align: left;
+    margin: auto;
+}
+
+#bloc2 {
     margin: auto;
 }
 
 #bloc3 {
-    text-align: center;
+    text-align: left;
     margin: auto;
 }
 
 .btcaselles{
-    background-color: #283593;
+    background-color: #303f9f;
     border: none;
     outline: none;
     overflow: hidden;
@@ -70,4 +74,12 @@ body {
 
 img {
     border-radius: 7px;
+}
+
+#divvp {
+    border: 1px solid white;
+    width: 200px;
+    height: 30px;
+    margin: auto;
+    padding-top: 10px;
 }
