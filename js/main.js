@@ -39,10 +39,10 @@ function iniciarPartida() {
     var guanyades, perdudes, abandonades;
     var arraypuntuacions = [];
 
-    localStorage.removeItem("guanyades");
-    localStorage.removeItem("perdudes");
-    localStorage.removeItem("abandonades");
-    localStorage.removeItem("arraypuntuacions");
+    //localStorage.removeItem("guanyades");
+    //localStorage.removeItem("perdudes");
+    //localStorage.removeItem("abandonades");
+    //localStorage.removeItem("arraypuntuacions");
 
     //creem l'objecte Tauler
     var Tauler = {
@@ -75,17 +75,13 @@ function iniciarPartida() {
                 //puntuacions maximes
                 puntuacionsmax.innerHTML = "";
                 for(var numfc = 5; numfc <= 20; numfc++){
-                    arraypuntuacions[numfc] = 0;
-                }
-                console.log("primer for hecho");
-                if (localStorage.getItem("arraypuntuacions") != null){
-                    for (var numfc = 5; numfc <= 20; numfc++){
-                        arraypuntuacions[numfc] = localStorage.getItem("arraypuntuacions")[numfc];
+                    if (localStorage.getItem("puntuacio" + numfc) == null){
+                        localStorage.setItem("puntuacio" + numfc, 0);
                     }
-                    console.log("entra al if");
                 }
+
                 for(var numfc = 5; numfc <= 20; numfc++){
-                    puntuacionsmax.innerHTML += numfc + "x" + numfc + " : " + arraypuntuacions[numfc] + "<br>";
+                    puntuacionsmax.innerHTML += numfc + "x" + numfc + " : " + localStorage.getItem("puntuacio" + numfc) + "<br>";
                 }
                 console.log("segundo for hecho");
                 
@@ -458,10 +454,9 @@ function iniciarPartida() {
             }
 
             //actualitzem puntuació màxima
-            if (punts>arraypuntuacions[valor]) {
+            if (punts>localStorage.getItem("puntuacio" + valor)) {
                 console.log("entra al if de reiniciar");
-                arraypuntuacions[valor] = punts;
-                localStorage.setItem("arraypuntuacions", arraypuntuacions);
+                localStorage.setItem("puntuacio" + valor, punts)
             }
         }
 
