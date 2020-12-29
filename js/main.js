@@ -42,7 +42,7 @@ function iniciarPartida() {
     //localStorage.removeItem("guanyades");
     //localStorage.removeItem("perdudes");
     //localStorage.removeItem("abandonades");
-    //localStorage.removeItem("arraypuntuacions");
+    //localStorage.removeItem("puntuacio5");
 
     //creem l'objecte Tauler
     var Tauler = {
