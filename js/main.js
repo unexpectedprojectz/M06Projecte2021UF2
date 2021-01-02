@@ -44,11 +44,6 @@ function iniciarPartida() {
 
     var comptador = 0, compte = document.getElementById('tempsRestant');
 
-    //localStorage.removeItem("guanyades");
-    //localStorage.removeItem("perdudes");
-    //localStorage.removeItem("abandonades");
-    //localStorage.removeItem("puntuacio5");
-
     //creem l'objecte Tauler
     var Tauler = {
 
@@ -57,10 +52,12 @@ function iniciarPartida() {
 
         inicialitzador: function () {
 
+            /* Inicialització del temps per al temporitzador */
             temps = minutsinicial * 60;
             minuts = Math.floor(temps / 60);
             segons = temps % 60;
 
+            /* incialització de la variable per saber els dispars */
             comptador = 0;
 
             valor = document.getElementById("filescolumnes").value;
@@ -249,7 +246,6 @@ function iniciarPartida() {
                         rfila = Math.floor(Math.random() * (valor));
                         if (Tauler.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
                             Tauler.casellesresposta[rfila][rcolumna] = new Estrella('e');
-                            console.log("estrelles: " + rfila + "-" + rcolumna);
                             seguir = false;
                         }
                     } while (seguir == true);
@@ -264,7 +260,6 @@ function iniciarPartida() {
                         rfila = Math.floor(Math.random() * (valor));
                         if (Tauler.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
                             Tauler.casellesresposta[rfila][rcolumna] = new Zombi('z');
-                            console.log("zombis: " + rfila + "-" + rcolumna);
                             seguir = false;
                         }
                     } while (seguir == true);
@@ -311,6 +306,7 @@ function iniciarPartida() {
             divTauler.style.display = '';
         },
 
+        /* mostrem la solució durant un temps */
         mostrarSolucio: function () {
             let width = "100px";
             let height = "100px";
@@ -329,10 +325,8 @@ function iniciarPartida() {
                 }
                 taulerSolucionat.innerHTML += "<br>";
             }
-
+            /* esperem el temps i tornem a colocar tot com abans */
             solucio = setTimeout(this.solucionar, 300);
-
-
         },
 
         solucionar: function () {
@@ -373,8 +367,8 @@ function iniciarPartida() {
             let ncolumna;
             let canviarimatge = true;
 
+            /* Recompte de dispars */
             comptador += 1;
-            console.log(comptador);
 
             if (filaDescobrir.value != "" && columnaDescobrir.value != "") {
                 if (filaDescobrir.value <= valor - 1 && columnaDescobrir.value <= valor - 1) {
@@ -410,15 +404,13 @@ function iniciarPartida() {
                             descobriment = "un zombi -100";
                             break;
                         case 'e':
-
+                            /* Si és el primer dispar i la casella destapada és estrella */
                             if (comptador == 1) {
-                                console.log('Primer dispar estrella');
                                 casellesTauler.style.display = 'none';
+                                /* Mostrem la solució durant 300 mili s. */
                                 Tauler.mostrarSolucio();
 
                             }
-
-
                             estrellesd++;
                             punts = punts + (200 * increment);
                             descobriment = "una estrella! +" + 200 * increment;
