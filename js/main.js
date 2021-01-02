@@ -40,7 +40,7 @@ function iniciarPartida() {
     var guanyades, perdudes, abandonades;
 
     var minutsinicial = 1;
-    var temps, minuts, segons, temporitzador;
+    var temps, minuts, segons, temporitzador, solucio;
 
     var comptador = 0, compte = document.getElementById('tempsRestant');
 
@@ -249,6 +249,7 @@ function iniciarPartida() {
                         rfila = Math.floor(Math.random() * (valor));
                         if (Tauler.casellesresposta[rfila][rcolumna].contingut == 'g') { //si la casella es troba lliure
                             Tauler.casellesresposta[rfila][rcolumna] = new Estrella('e');
+                            console.log("estrelles: " + rfila + "-" + rcolumna);
                             seguir = false;
                         }
                     } while (seguir == true);
@@ -329,9 +330,43 @@ function iniciarPartida() {
                 taulerSolucionat.innerHTML += "<br>";
             }
 
+            solucio = setTimeout(this.solucionar, 300);
+
+
         },
 
-        
+        solucionar: function () {
+            taulerSolucionat.style.display = 'none';
+            casellesTauler.style.display = '';
+            clearInterval(solucio);
+        },
+
+        rutaImatgeSolucio: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
+            let imatge;
+            switch (Tauler.casellesresposta[fila][columna].contingut) {
+                case 'g':
+                    imatge = "img/gespa.jpg";
+                    break;
+                case 'z':
+                    imatge = "img/zombi.jpg";
+                    break;
+                case 'e':
+                    imatge = "img/estrella.jpg";
+                    break;
+                case 'd':
+                    imatge = "img/doblepuntuacio.jpg";
+                    break;
+                case 'm':
+                    imatge = "img/meitatzombis.jpg";
+                    break;
+                case 'v':
+                    imatge = "img/vidaextra.jpg";
+                    break;
+                default:
+                    imatge = "img/estrella.jpg";
+            }
+            return imatge;
+        },
 
         canviarContingut: function () {
             let nfila;
@@ -380,8 +415,6 @@ function iniciarPartida() {
                                 console.log('Primer dispar estrella');
                                 casellesTauler.style.display = 'none';
                                 Tauler.mostrarSolucio();
-                                casellesTauler.style.display = '';
-
 
                             }
 
@@ -480,32 +513,7 @@ function iniciarPartida() {
             }
             return imatge;
         },
-        rutaImatgeSolucio: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
-        let imatge;
-        switch (Tauler.casellesresposta[fila][columna].contingut) {
-            case 'g':
-                imatge = "img/gespa.jpg";
-                break;
-            case 'z':
-                imatge = "img/zombi.jpg";
-                break;
-            case 'e':
-                imatge = "img/estrella.jpg";
-                break;
-            case 'd':
-                imatge = "img/doblepuntuacio.jpg";
-                break;
-            case 'm':
-                imatge = "img/meitatzombis.jpg";
-                break;
-            case 'v':
-                imatge = "img/vidaextra.jpg";
-                break;
-            default:
-                imatge = "img/estrella.jpg";
-        }
-        return imatge;
-    },
+
 
         reiniciar: function (opcio) {
             // deixem tot buit / ocultem el tauler i mostrem div per introduir valor de nou
