@@ -309,6 +309,28 @@ function iniciarPartida() {
             divTauler.style.display = '';
         },
 
+        mostrarSolucio: function () {
+            let width = "100px";
+            let height = "100px";
+
+            divTauler.style.display = 'none';
+
+            if (valor >= 10) { //si son 10 caselles o més reduim la mida de les imatges a la meitat
+                width = "50px";
+                height = "50px";
+            }
+
+            for (var files = 0; files <= valor - 1; files++) {
+                for (var columnes = 0; columnes <= valor - 1; columnes++) {
+                    imatge = Tauler.rutaSolucio(files, columnes);
+                    casellesTauler.innerHTML += "<button id='" + files + "-" + columnes + "' class='btcaselles'><img src='" + imatge + "' width='" + width + "' height='" + height + "'></button>";
+                }
+                casellesTauler.innerHTML += "<br>";
+            }
+            divTauler.style.display = '';
+
+        },
+
         canviarContingut: function () {
             let nfila;
             let ncolumna;
@@ -354,8 +376,7 @@ function iniciarPartida() {
 
                             if (comptador == 1) {
                                 console.log('Primer dispar estrella');
-
-                                //Tauler.mostrarContingut();
+                                Tauler.mostrarSolucio();
 
                             }
 
@@ -433,6 +454,32 @@ function iniciarPartida() {
         rutaImatge: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
             let imatge;
             switch (Tauler.casellesusuari[fila][columna].contingut) {
+                case 'g':
+                    imatge = "img/gespa.jpg";
+                    break;
+                case 'z':
+                    imatge = "img/zombi.jpg";
+                    break;
+                case 'e':
+                    imatge = "img/estrella.jpg";
+                    break;
+                case 'd':
+                    imatge = "img/doblepuntuacio.jpg";
+                    break;
+                case 'm':
+                    imatge = "img/meitatzombis.jpg";
+                    break;
+                case 'v':
+                    imatge = "img/vidaextra.jpg";
+                    break;
+            }
+            return imatge;
+        },
+
+
+        rutaSolucio: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
+            let imatge;
+            switch (Tauler.casellesresposta[fila][columna].contingut) {
                 case 'g':
                     imatge = "img/gespa.jpg";
                     break;
