@@ -18,6 +18,7 @@ function iniciarPartida() {
 
     //vinculem variables necessaries amb html
     var casellesTauler = document.getElementById('casellestauler');
+    var taulerSolucionat = document.getElementById('taulerSolucionat');
     var totals = document.getElementById('totals');
     var descoberts = document.getElementById('descoberts');
     var estadistiques = document.getElementById('estadistiques');
@@ -313,7 +314,7 @@ function iniciarPartida() {
             let width = "100px";
             let height = "100px";
 
-            divTauler.style.display = 'none';
+            taulerSolucionat.style.display = '';
 
             if (valor >= 10) { //si son 10 caselles o més reduim la mida de les imatges a la meitat
                 width = "50px";
@@ -322,14 +323,15 @@ function iniciarPartida() {
 
             for (var files = 0; files <= valor - 1; files++) {
                 for (var columnes = 0; columnes <= valor - 1; columnes++) {
-                    imatge = Tauler.rutaSolucio(files, columnes);
-                    casellesTauler.innerHTML += "<button id='" + files + "-" + columnes + "' class='btcaselles'><img src='" + imatge + "' width='" + width + "' height='" + height + "'></button>";
+                    imatge = Tauler.rutaImatgeSolucio(files, columnes);
+                    taulerSolucionat.innerHTML += "<button id='" + files + "-" + columnes + "' class='btcaselles'><img src='" + imatge + "' width='" + width + "' height='" + height + "'></button>";
                 }
-                casellesTauler.innerHTML += "<br>";
+                taulerSolucionat.innerHTML += "<br>";
             }
-            divTauler.style.display = '';
 
         },
+
+        
 
         canviarContingut: function () {
             let nfila;
@@ -376,7 +378,10 @@ function iniciarPartida() {
 
                             if (comptador == 1) {
                                 console.log('Primer dispar estrella');
+                                casellesTauler.style.display = 'none';
                                 Tauler.mostrarSolucio();
+                                casellesTauler.style.display = '';
+
 
                             }
 
@@ -475,32 +480,32 @@ function iniciarPartida() {
             }
             return imatge;
         },
-
-
-        rutaSolucio: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
-            let imatge;
-            switch (Tauler.casellesresposta[fila][columna].contingut) {
-                case 'g':
-                    imatge = "img/gespa.jpg";
-                    break;
-                case 'z':
-                    imatge = "img/zombi.jpg";
-                    break;
-                case 'e':
-                    imatge = "img/estrella.jpg";
-                    break;
-                case 'd':
-                    imatge = "img/doblepuntuacio.jpg";
-                    break;
-                case 'm':
-                    imatge = "img/meitatzombis.jpg";
-                    break;
-                case 'v':
-                    imatge = "img/vidaextra.jpg";
-                    break;
-            }
-            return imatge;
-        },
+        rutaImatgeSolucio: function (fila, columna) { //segons contingut de l'element retorna una ruta d'imatge
+        let imatge;
+        switch (Tauler.casellesresposta[fila][columna].contingut) {
+            case 'g':
+                imatge = "img/gespa.jpg";
+                break;
+            case 'z':
+                imatge = "img/zombi.jpg";
+                break;
+            case 'e':
+                imatge = "img/estrella.jpg";
+                break;
+            case 'd':
+                imatge = "img/doblepuntuacio.jpg";
+                break;
+            case 'm':
+                imatge = "img/meitatzombis.jpg";
+                break;
+            case 'v':
+                imatge = "img/vidaextra.jpg";
+                break;
+            default:
+                imatge = "img/estrella.jpg";
+        }
+        return imatge;
+    },
 
         reiniciar: function (opcio) {
             // deixem tot buit / ocultem el tauler i mostrem div per introduir valor de nou
@@ -523,6 +528,12 @@ function iniciarPartida() {
             else {
                 localStorage.setItem("abandonades", parseInt(abandonades) + 1);
             }
+
+
+            videsPartida.innerHTML = 0;
+            clearInterval(temporitzador);
+            document.getElementById("tempsRestant").innerText = '01:00';
+            compte.style.display = 'none';
 
             //actualitzem puntuació màxima
             if (punts > localStorage.getItem("puntuacio" + valor)) {

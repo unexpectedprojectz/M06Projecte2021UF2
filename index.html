@@ -1,61 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Zombies Party</title>
-        <link rel="stylesheet" type="text/css" href="css/styles.css">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
-    </head>
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zombies Party</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,300&display=swap"
+        rel="stylesheet">
+</head>
 
-        <div id="filesColumnes">
-            <text>Número de files i columnes: </text><input id="filescolumnes" class="inputs1" input type="number" min="5" max="20" value="5">
-            <button id="juga" class="botons">JUGA</button><br>
+<body>
+
+    <div id="filesColumnes">
+        <text>Número de files i columnes: </text><input id="filescolumnes" class="inputs1" input type="number" min="5"
+            max="20" value="5">
+        <button id="juga" class="botons">JUGA</button><br>
+
+    </div>
+
+    <div id="tauler">
+        <div id="bloc1">
+            <b>Totals</b><br>
+            <text id="totals"></text><br><br><br>
+            <b>Descoberts</b><br>
+            <text id="descoberts"></text>
+        </div>
+        <div id="bloc2">
+            <br>
+            <div id="divvp">
+                <b>Vides: </b><text id="vides"></text>
+                <b>Punts: </b><text id="punts"></text>
+            </div>
+            <br>
+
+            <text id="infodescobert"></text><br><br>
+            <input id="filadescobrir" class="inputs2" type="number" placeholder="Fila"><span> </span><input
+                id="columnadescobrir" class="inputs2" type="number" placeholder="Columna"><span> </span><button
+                id="descobrir" class="botons">DESCOBRIR</button><br><br>
             
+            <div id="casellestauler"></div><br><br>
+            <div id="taulerSolucionat" style="display: none;"></div>
+
+            <button id="abandonar" class="botons">ABANDONAR</button><br><br>
+            <button id="temporizador" class="botons">TEMPORIZADOR</button><br>
+            <h1 id="tempsRestant" style="display: none;">01:00</h1>
         </div>
-
-        <div id="tauler">
-            <div id="bloc1">
-                <b>Totals</b><br>
-                <text id="totals"></text><br><br><br>
-                <b>Descoberts</b><br>
-                <text id="descoberts"></text>
-            </div>
-            <div id="bloc2">
-                <br>
-                <div id="divvp">
-                    <b>Vides: </b><text id="vides"></text>
-                    <b>Punts: </b><text id="punts"></text>
-                </div>
-                <br>
-
-                <text id="infodescobert"></text><br><br>
-                <input id="filadescobrir" class="inputs2" type="number" placeholder="Fila"><span> </span><input id="columnadescobrir" class="inputs2" type="number" placeholder="Columna"><span> </span><button id="descobrir" class="botons">DESCOBRIR</button><br><br>
-                
-                <div id="casellestauler"></div><br><br>
-                <button id="abandonar" class="botons">ABANDONAR</button><br>
-                <button id="temporizador" class="botons">TEMPORIZADOR</button><br>
-                <h1 id="tempsRestant" style="display: none;">01:00</h1>
-            </div>
-            <div id="bloc3">
-                <b>Estadistiques</b><br>
-                <text id="estadistiques"></text><br><br>
-                <b>Puntuacions màximes</b><br>
-                <text id="puntuacionsmax"></text>
-            </div>
+        <div id="bloc3">
+            <b>Estadistiques</b><br>
+            <text id="estadistiques"></text><br><br>
+            <b>Puntuacions màximes</b><br>
+            <text id="puntuacionsmax"></text>
         </div>
+    </div>
 
-        <script src="js/element.js"></script>
-        <script src="js/estrella.js"></script>
-        <script src="js/zombi.js"></script>
-        <script src="js/recompensa.js"></script>
-        <script src="js/doblepunts.js"></script>
-        <script src="js/meitatzombis.js"></script>
-        <script src="js/vidaextra.js"></script>
-        <script src="js/main.js"></script>
+    <script src="js/element.js"></script>
+    <script src="js/estrella.js"></script>
+    <script src="js/zombi.js"></script>
+    <script src="js/recompensa.js"></script>
+    <script src="js/doblepunts.js"></script>
+    <script src="js/meitatzombis.js"></script>
+    <script src="js/vidaextra.js"></script>
+    <script src="js/main.js"></script>
 
-    </body>
+</body>
 
 </html>
