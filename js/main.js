@@ -37,10 +37,11 @@ function iniciarPartida() {
     var vides, punts, increment;
     var descobriment;
     var guanyades, perdudes, abandonades;
+
     var minutsinicial = 1;
     var temps, minuts, segons, temporitzador;
 
-
+    var comptador = 0, compte = document.getElementById('tempsRestant');
 
     //localStorage.removeItem("guanyades");
     //localStorage.removeItem("perdudes");
@@ -58,6 +59,8 @@ function iniciarPartida() {
             temps = minutsinicial * 60;
             minuts = Math.floor(temps / 60);
             segons = temps % 60;
+
+            comptador = 0;
 
             valor = document.getElementById("filescolumnes").value;
 
@@ -311,6 +314,9 @@ function iniciarPartida() {
             let ncolumna;
             let canviarimatge = true;
 
+            comptador += 1;
+            console.log(comptador);
+
             if (filaDescobrir.value != "" && columnaDescobrir.value != "") {
                 if (filaDescobrir.value <= valor - 1 && columnaDescobrir.value <= valor - 1) {
                     nfila = filaDescobrir.value;
@@ -325,15 +331,6 @@ function iniciarPartida() {
                 ncolumna = coordenades[1];
             }
 
-            var primerDispar = localStorage.getItem("primerDispar");
-
-
-            if (primerDispar == null) {
-
-                primerDispar = localStorage.setItem("primerDispar", '1');
-
-
-            }
 
             if (canviarimatge == true) {
                 if (Tauler.casellesresposta[nfila][ncolumna].contingut === (Tauler.casellesresposta[nfila][ncolumna].contingut).toLowerCase()) { // si la casella no està destapada encara
@@ -355,9 +352,13 @@ function iniciarPartida() {
                             break;
                         case 'e':
 
-                            if (primerDispar == '1') {
-                                console.log('YES');
+                            if (comptador == 1) {
+                                console.log('Primer dispar estrella');
+
+                                //Tauler.mostrarContingut();
+
                             }
+
 
                             estrellesd++;
                             punts = punts + (200 * increment);
@@ -476,8 +477,6 @@ function iniciarPartida() {
                 localStorage.setItem("abandonades", parseInt(abandonades) + 1);
             }
 
-            localStorage.removeItem("primerDispar");
-
             //actualitzem puntuació màxima
             if (punts > localStorage.getItem("puntuacio" + valor)) {
                 localStorage.setItem("puntuacio" + valor, punts)
@@ -485,6 +484,7 @@ function iniciarPartida() {
         },
 
         activarTemporitzador: function () {
+            compte.style.display = '';
             temporitzador = setInterval(Tauler.actualitzarTemporitzador, 1000);
         },
 
@@ -498,8 +498,10 @@ function iniciarPartida() {
             }
             //fem que si el comptador arriba a 0:00 actui com una derrota
             if (minuts == 0 && segons == 0) {
+                videsPartida.innerHTML = 0;
                 clearInterval(temporitzador);
                 document.getElementById("tempsRestant").innerText = '01:00';
+                compte.style.display = 'none';
                 Tauler.reiniciar(2);
             }
 
