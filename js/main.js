@@ -37,7 +37,10 @@ function iniciarPartida() {
     var vides, punts, increment;
     var descobriment;
     var guanyades, perdudes, abandonades;
-    var arraypuntuacions = [];
+    var minutsinicial = 1;
+    var temps, minuts, segons, temporitzador;
+
+
 
     //localStorage.removeItem("guanyades");
     //localStorage.removeItem("perdudes");
@@ -51,38 +54,43 @@ function iniciarPartida() {
         casellesresposta: [],
 
         inicialitzador: function () {
+
+            temps = minutsinicial * 60;
+            minuts = Math.floor(temps / 60);
+            segons = temps % 60;
+
             valor = document.getElementById("filescolumnes").value;
 
             //si el valor és correcte (entre 5 i 20) podem crear el tauler
             if (valor >= 5 && valor <= 20) {
-                
+
                 divFilesColumnes.style.display = 'none'; //ocultem l'input
                 divEstadistiques.style.display = ''; //mostrem les estadistiques
 
                 //estadistiques
                 guanyades = 0, perdudes = 0, abandonades = 0;
-                if (localStorage.getItem("guanyades") != null){
+                if (localStorage.getItem("guanyades") != null) {
                     guanyades = localStorage.getItem("guanyades");
                 }
-                if (localStorage.getItem("perdudes") != null){
+                if (localStorage.getItem("perdudes") != null) {
                     perdudes = localStorage.getItem("perdudes");
                 }
-                if (localStorage.getItem("abandonades") != null){
+                if (localStorage.getItem("abandonades") != null) {
                     abandonades = localStorage.getItem("abandonades");
                 }
                 estadistiques.innerHTML = "Guanyades: " + guanyades + "<br> Perdudes: " + perdudes + "<br> Abandonades: " + abandonades;
 
                 //puntuacions maximes
                 puntuacionsmax.innerHTML = "";
-                for(var numfc = 5; numfc <= 20; numfc++){
-                    if (localStorage.getItem("puntuacio" + numfc) == null){
+                for (var numfc = 5; numfc <= 20; numfc++) {
+                    if (localStorage.getItem("puntuacio" + numfc) == null) {
                         localStorage.setItem("puntuacio" + numfc, 0);
                     }
                 }
-                for(var numfc = 5; numfc <= 20; numfc++){
+                for (var numfc = 5; numfc <= 20; numfc++) {
                     puntuacionsmax.innerHTML += numfc + "x" + numfc + " : " + localStorage.getItem("puntuacio" + numfc) + "<br>";
                 }
-                
+
                 //inicialitzem els elements i preparem els que necessitarem de cada tipus
                 estrellesd = 0, zombisd = 0, doblarpuntuacionsd = 0, meitatzombisd = 0, videsextresd = 0;
 
@@ -279,7 +287,7 @@ function iniciarPartida() {
                 width = "50px";
                 height = "50px";
             }
-            
+
             for (var files = 0; files <= valor - 1; files++) {
                 for (var columnes = 0; columnes <= valor - 1; columnes++) {
                     imatge = Tauler.rutaImatge(files, columnes);
@@ -317,6 +325,16 @@ function iniciarPartida() {
                 ncolumna = coordenades[1];
             }
 
+            var primerDispar = localStorage.getItem("primerDispar");
+
+
+            if (primerDispar == null) {
+
+                primerDispar = localStorage.setItem("primerDispar", '1');
+
+
+            }
+
             if (canviarimatge == true) {
                 if (Tauler.casellesresposta[nfila][ncolumna].contingut === (Tauler.casellesresposta[nfila][ncolumna].contingut).toLowerCase()) { // si la casella no està destapada encara
                     Tauler.casellesusuari[nfila][ncolumna].contingut = Tauler.casellesresposta[nfila][ncolumna].contingut; //col·loquem l'element del tauler resposta al tauler usuari
@@ -325,7 +343,7 @@ function iniciarPartida() {
                     switch (Tauler.casellesusuari[nfila][ncolumna].contingut) { //afegim +1 al recompte de destapats i actualitzem les dades a mostrar
                         case 'g':
                             punts = punts + (50 * increment);
-                            descobriment = "gespa! +" + 50*increment;
+                            descobriment = "gespa! +" + 50 * increment;
                             break;
                         case 'z':
                             zombisd++;
@@ -336,9 +354,14 @@ function iniciarPartida() {
                             descobriment = "un zombi -100";
                             break;
                         case 'e':
+
+                            if (primerDispar == '1') {
+                                console.log('YES');
+                            }
+
                             estrellesd++;
                             punts = punts + (200 * increment);
-                            descobriment = "una estrella! +" + 200*increment;
+                            descobriment = "una estrella! +" + 200 * increment;
                             break;
                         case 'd':
                             doblarpuntuacionsd++;
@@ -398,7 +421,7 @@ function iniciarPartida() {
                 alert("Has guanyat!");
                 Tauler.reiniciar(1);
             }
-            
+
             if (vides == 0) { //si el jugador es queda sense vides
                 alert("Has perdut!");
                 Tauler.reiniciar(2);
@@ -441,20 +464,45 @@ function iniciarPartida() {
             Tauler.casellesresposta = [];
 
             //sumem +1 a la estadistica corresponent
-            if (opcio == 1){
-                localStorage.setItem("guanyades", parseInt(guanyades)+1);
+            if (opcio == 1) {
+
+                localStorage.setItem("guanyades", parseInt(guanyades) + 1);
             }
-            else if (opcio == 2){
-                localStorage.setItem("perdudes", parseInt(perdudes)+1);
+            else if (opcio == 2) {
+
+                localStorage.setItem("perdudes", parseInt(perdudes) + 1);
             }
             else {
-                localStorage.setItem("abandonades", parseInt(abandonades)+1);
+                localStorage.setItem("abandonades", parseInt(abandonades) + 1);
             }
 
+            localStorage.removeItem("primerDispar");
+
             //actualitzem puntuació màxima
-            if (punts>localStorage.getItem("puntuacio" + valor)) {
+            if (punts > localStorage.getItem("puntuacio" + valor)) {
                 localStorage.setItem("puntuacio" + valor, punts)
             }
+        },
+
+        activarTemporitzador: function () {
+            temporitzador = setInterval(Tauler.actualitzarTemporitzador, 1000);
+        },
+
+        actualitzarTemporitzador: function () {
+            //si el temporitzador acaba de començar(1:00) o no ha finalitzat encara (no és 0:00) restem temps, recalculem minuts i segons i mostrem
+            if ((minuts == 1 && segons == 0) || !(minuts == 0 && segons == 0)) {
+                temps--;
+                minuts = Math.floor(temps / 60);
+                segons = temps % 60;
+                document.getElementById("tempsRestant").innerText = minuts + " : " + (segons < 10 ? '0' + segons : segons);
+            }
+            //fem que si el comptador arriba a 0:00 actui com una derrota
+            if (minuts == 0 && segons == 0) {
+                clearInterval(temporitzador);
+                document.getElementById("tempsRestant").innerText = '01:00';
+                Tauler.reiniciar(2);
+            }
+
         }
 
     };
@@ -463,29 +511,9 @@ function iniciarPartida() {
     document.getElementById("juga").addEventListener("click", Tauler.inicialitzador);
     document.getElementById("descobrir").addEventListener("click", Tauler.canviarContingut);
     document.getElementById("abandonar").addEventListener("click", Tauler.reiniciar);
+    document.getElementById("temporizador").addEventListener("click", Tauler.activarTemporitzador);
+
 
 }
 
-/* ********************** localStorage *********************************** */
 
-/* emmagatzema dades sense data de caducitat.
- Les dades no es suprimiran quan el navegador estigui tancat i estaran disponibles el dia,
- la setmana o l'any següent. */
-
-/* GUARDAR DATO
-
-localStorage.setItem("key", "value");
-
-*/
-
-/* LEER DATO
-
-var lastname = localStorage.getItem("key");
-
-*/
-
-/* ELIMINAR DATO
-
-localStorage.removeItem("key");
-
-*/
